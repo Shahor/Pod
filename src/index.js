@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
@@ -12,13 +12,14 @@ import { Route
 
 import AppContainer from './containers/App'
 import HomeContainer from './containers/Home'
+import PodcastContainer from "./containers/Podcast"
 
 ReactDOM.render(
 	<Provider store={Store}>
 		<Router history={hashHistory}>
 			<Route path="/" component={AppContainer}>
 				<IndexRoute component={HomeContainer} />
-				{/* <Route path="/podcast/:id" component={PodcastContainer} /> */}
+				<Route path="/podcast/:id" component={PodcastContainer} />
 			</Route>
 		</Router>
 	</Provider>,

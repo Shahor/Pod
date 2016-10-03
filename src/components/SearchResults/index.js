@@ -39,7 +39,7 @@ const Styles = {
 const Search = (props) => {
 	const onClick = (podcast) => {
 		props.onSubscribe(podcast)
-		// props.onClose()
+		props.onClose()
 	}
 
 	let sectionStyles = Object.assign({}, Styles.section, {

@@ -22,7 +22,7 @@ const getSearchURL = (term) => {
 	return Promise.resolve(url)
 }
 
-App.get('/podcast', function (req, res) {
+App.get('/podcast', (req, res) => {
 	const term = encodeURIComponent(req.query.term)
 
 	getSearchURL(term)
@@ -35,6 +35,40 @@ App.get('/podcast', function (req, res) {
 			res.status(500).json(error)
 		})
 });
+
+App.get('/episodes', (req, res) => {
+	const X2JS = require('x2js')
+	const Url = require('url')
+	const { href, protocol } = Url.parse(req.query.url)
+	const method = /https/.test(protocol) ? 'https' : 'http'
+
+	Request[method](href)
+		.then(response => {
+			let p = new X2JS()
+			return p.xml2js(response)
+		})
+		.then(episodes => {
+			return episodes.rss.channel.item.map(episode => {
+				console.log(episode)
+				const {
+					title,
+					pubDate,
+					link,
+					enclosure
+				} = episode
+
+				return {
+					title,
+					pubDate,
+					link,
+					enclosure
+				}
+			})
+		})
+		.then(episodes => {
+			res.json(episodes)
+		})
+})
 
 App.listen(Config.server.port, () => {
 	console.log(`Server is listening on port ${Config.server.port}`)

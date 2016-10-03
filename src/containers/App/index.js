@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import Header from '../../components/Header'
 import Podcasts from '../../components/Podcasts'
-import Episodes from '../../components/Episodes'
 
 let Styles = {
 	podContainer : {
@@ -10,8 +9,10 @@ let Styles = {
 		height : 'calc(100% - 50px)'
 	},
 	main : {
+		flexGrow : 4,
 		backgroundColor : 'yellow',
-		flexGrow : 4
+		padding : '10px',
+		overflow : 'auto'
 	}
 }
 
@@ -19,7 +20,7 @@ const App = (props) => {
 	return (
 		<section id="main-container">
 			<Header />
-			
+
 			<section className="pod-container" style={Styles.podContainer}>
 				<Podcasts />
 
