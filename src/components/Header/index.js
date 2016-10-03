@@ -2,6 +2,8 @@ import React from 'react'
 
 import SearchResults from "../SearchResults"
 
+import Config from "../../../config"
+
 const Styles = {
     header : {
         height: '50px',
@@ -31,7 +33,9 @@ class Header extends React.Component {
     onSubmit (e) {
         e.preventDefault()
 
-        fetch(`http://localhost:4242/podcast?term=${this.state.search}`)
+        const { method, host, port } = Config.server
+
+        fetch(`${method}://${host}:${port}/podcast?term=${this.state.search}`)
             .then((reponse) => {
                 return reponse.json()
             })

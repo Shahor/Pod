@@ -1,5 +1,6 @@
 const App = require('express')();
 const Request = require('./request')
+const Config = require('../config')
 
 // Middleware for CORS
 App.use((req, res, next) => {
@@ -10,20 +11,31 @@ App.use((req, res, next) => {
     next();
 })
 
-const PODCAST_SEARCH = 'https://itunes.apple.com/search?limit=25&media=podcast&term=#TERM#'
+const getSearchURL = (term) => {
+    const { searchUrl, params } = Config.podcasts
+    const mixedParams = Object.assign({}, params, { term })
+
+    const url = Object.keys(mixedParams).reduce((acc, key) => {
+        return acc + `${key}=${mixedParams[key]}&`
+    }, searchUrl + '?')
+
+    return Promise.resolve(url)
+}
 
 App.get('/podcast', function (req, res) {
-    const search = encodeURIComponent(req.query.term)
+    const term = encodeURIComponent(req.query.term)
 
-    Request.https(PODCAST_SEARCH.replace('#TERM#', search))
+    getSearchURL(term)
+        .then(Request.https)
         .then(response => {
             res.json(JSON.parse(response));
         })
         .catch(error => {
+            console.error( error)
             res.status(500).json(error)
         })
 });
 
-App.listen(process.argv[2], function () {
-    console.log(`Server is listening on port ${process.argv[2]}`)
+App.listen(Config.server.port, () => {
+    console.log(`Server is listening on port ${Config.server.port}`)
 });
