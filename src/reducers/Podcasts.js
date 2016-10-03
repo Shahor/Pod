@@ -1,11 +1,9 @@
-const initialState = [
-	'pod1',
-	'pod2'
-]
+const fromStorage = window.localStorage.getItem('Podcasts')
+const initialState = JSON.parse(fromStorage) || []
 
 export default (state = initialState, action) => {
 	switch (action.type) {
-		case 'ADD_PODCAST':
+		case 'SUBSCRIBE':
 			return state.concat(action.podcast)
 		case 'ADD_PODCASTS':
 			return state.concat(action.podcasts)
