@@ -5,72 +5,71 @@ import SearchResults from "../SearchResults"
 import Config from "../../../config"
 
 const Styles = {
-    header : {
-        height: '50px',
-        backgroundColor: 'pink',
-        display : 'flex',
-        justifyContent : 'center',
-        alignItems : 'center'
-    }
+	header : {
+		height: '50px',
+		backgroundColor: 'pink',
+		display : 'flex',
+		justifyContent : 'center',
+		alignItems : 'center'
+	}
 }
 
 class Header extends React.Component {
-    constructor (props) {
-        super(props)
+	constructor (props) {
+		super(props)
 
-        this.state = {
-            search : '',
-            results : []
-        }
-    }
+		this.state = {
+			search : '',
+			results : []
+		}
+	}
 
-    onChange (e) {
-        this.setState({
-            search : e.target.value
-        })
-    }
+	onChange (e) {
+		this.setState({
+			search : e.target.value
+		})
+	}
 
-    onSubmit (e) {
-        e.preventDefault()
+	onSubmit (e) {
+		e.preventDefault()
 
-        const { method, host, port } = Config.server
+		const { method, host, port } = Config.server
 
-        fetch(`${method}://${host}:${port}/podcast?term=${this.state.search}`)
-            .then((reponse) => {
-                return reponse.json()
-            })
-            .then(rep => {
-                this.setState({
-                    results : rep.results
-                })
-            })
-            .catch(err => { console.log(err) })
-    }
+		fetch(`${method}://${host}:${port}/podcast?term=${this.state.search}`)
+			.then((reponse) => {
+				return reponse.json()
+			})
+			.then(rep => {
+				this.setState({
+					results : rep.results
+				})
+			})
+			.catch(err => { console.log(err) })
+	}
 
-    onClose () {
-        this.setState({
-            search : '',
-            results : []
-        })
-    }
+	onClose () {
+		this.setState({
+			search : '',
+			results : []
+		})
+	}
 
-    render () {
-        const { results, search } = this.state
+	render () {
+		const { results, search } = this.state
 
-        return <header style={Styles.header}>
-            <form onSubmit={this.onSubmit.bind(this)}>
-                <input type="text"
-                    value={search}
-                    onChange={this.onChange.bind(this)}
-                    placeholder="Podcast search..."
-                />
-            </form>
-            <SearchResults
-                results={results}
-                onClose={this.onClose.bind(this)}
-            />
-        </header>
-    }
+		return <header style={Styles.header}>
+			<form onSubmit={this.onSubmit.bind(this)}>
+				<input type="text"
+					value={search}
+					onChange={this.onChange.bind(this)}
+					placeholder="Podcast search..."
+				/>
+			</form>
+			<SearchResults results={results}
+				onClose={this.onClose.bind(this)}
+			/>
+		</header>
+	}
 }
 
 export default Header
