@@ -1,3 +1,4 @@
+// window.localStorage.setItem('Podcasts', JSON.stringify([]))
 const fromStorage = window.localStorage.getItem('Podcasts')
 const initialState = JSON.parse(fromStorage) || []
 

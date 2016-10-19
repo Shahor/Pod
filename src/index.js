@@ -31,9 +31,9 @@ window.addEventListener('beforeunload', () => {
 
 	// Save all the things
 	for (let key of Object.keys(state)) {
-		window.localStorage.setItem(
-			key,
-			JSON.stringify(state[key])
-		)
+		// window.localStorage.setItem(
+		// 	key,
+		// 	JSON.stringify(state[key])
+		// )
 	}
 })

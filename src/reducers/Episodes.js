@@ -1,3 +1,4 @@
+// window.localStorage.setItem('Episodes', JSON.stringify({}))
 const fromStorage = window.localStorage.getItem('Episodes')
 const initialState = JSON.parse(fromStorage) || {}
 

@@ -2,11 +2,12 @@ import React from 'react';
 
 import Header from '../../components/Header'
 import Podcasts from '../../components/Podcasts'
+import Player from "../../components/Player"
 
 let Styles = {
 	podContainer : {
 		display : 'flex',
-		height : 'calc(100% - 50px)'
+		height : 'calc(100% - 150px)'
 	},
 	main : {
 		flexGrow : 4,
@@ -28,6 +29,8 @@ const App = (props) => {
 					{props.children}
 				</main>
 			</section>
+
+			<Player />
 		</section>
 	);
 }

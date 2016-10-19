@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { addEpisodes } from "../../actions/episodes"
+import { load } from "../../actions/player"
 
 import Config from "../../../config"
 
@@ -48,7 +49,9 @@ const PodcastContainer = (props) => {
 			{episodes.map((episode, index) => {
 				return <li key={index}>
 					<span>{episode.title}</span>
-					{/* <audio src={episode.enclosure._url} controls></audio> */}
+					<input type="button" value="Play" onClick={() => {
+						props.loadEpisode(episode.enclosure._url)
+					}}/>
 				</li>
 			})}
 		</ul>
@@ -66,6 +69,9 @@ const actions = (dispatch) => {
 	return {
 		addEpisodes : (...args) => {
 			return dispatch(addEpisodes(...args))
+		},
+		loadEpisode : (...args) => {
+			return dispatch(load(...args))
 		}
 	}
 }
